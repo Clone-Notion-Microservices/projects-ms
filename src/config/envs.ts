@@ -5,10 +5,12 @@ import * as process from 'node:process';
 
 interface EnvVariables {
   PORT: number;
+  DATABASE_URL: string;
 }
 
 const envsSchema = joi.object({
   PORT: joi.number().required(),
+  DATABASE_URL: joi.string().required(),
 })
   .unknown(true);
 
@@ -21,4 +23,5 @@ if (error) {
 const envVariables: EnvVariables = value;
 export const envs = {
   port: envVariables.PORT,
+  databaseUrl: envVariables.DATABASE_URL
 };

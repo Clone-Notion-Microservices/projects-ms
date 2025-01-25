@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class ProjectsService {
+export class ProjectsService extends PrismaClient implements OnModuleInit {
+
+  private  readonly logger = new Logger(ProjectsService.name);
+
   create(createProjectDto: CreateProjectDto) {
     return 'This action adds a new project';
   }
@@ -22,5 +26,10 @@ export class ProjectsService {
 
   remove(id: number) {
     return `This action removes a #${id} project`;
+  }
+
+  onModuleInit(): any {
+    this.$connect();
+    this.logger.log('Projects database service connected');
   }
 }
