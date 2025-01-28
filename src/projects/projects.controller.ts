@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { PaginationDto } from '../common';
 
 @Controller()
 export class ProjectsController {
@@ -14,8 +15,8 @@ export class ProjectsController {
   }
 
   @MessagePattern('findAllProjects')
-  findAll() {
-    return this.projectsService.findAll();
+  findAllProjects(queryDto: PaginationDto) {
+    return this.projectsService.findAll(queryDto);
   }
 
   @MessagePattern('findOneProject')
